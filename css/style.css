@@ -1,0 +1,45 @@
+body {
+    font-family: Helvetica;
+    margin: 0;
+    padding: 0;
+/* TODO: actually have a style theme here*/
+    background: #102030 url(../images/noise.png);
+    color: #ddd;
+}
+
+#container {
+    margin-left: auto;
+    margin-right: auto;
+    width: 960px;
+}
+
+header {
+    text-align: center;
+    text-shadow: rgba(255,255,255,0.3) 1px 1px 1px;
+}
+
+div.select {
+    clear: right;
+    position: relative;
+}
+div.select span {
+    margin: 0 10px;
+}
+
+form {
+    display: inline-block;
+}
+
+label {
+    font-size: 18px;
+    line-height: 22px;
+    margin-bottom: 3px;
+    text-shadow: rgba(255,255,255,0.3) 1px 1px 1px;
+    display: block;
+}
+
+input {
+    font-size: 18px;
+    border-radius: 2px;
+    border: 1px solid black;
+}
