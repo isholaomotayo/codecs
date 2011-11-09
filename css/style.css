@@ -2,7 +2,7 @@ body {
     font-family: Helvetica;
     margin: 0;
     padding: 0;
-/* TODO: actually have a style theme here*/
+/* TODO: actually have some pretty theme here*/
     background: #102030 url(../images/noise.png);
     color: #ddd;
 }
@@ -18,28 +18,34 @@ header {
     text-shadow: rgba(255,255,255,0.3) 1px 1px 1px;
 }
 
-div.select {
-    clear: right;
-    position: relative;
+#players {
+    background-color: rgba(0,0,0,0.5);
+    border: 2px solid white;
+    box-shadow: 0 0 8px black, 0 0 14px black inset;
+    border-radius: 5px;
 }
-div.select span {
-    margin: 0 10px;
+#players > div {
+    width: 50%;
+}
+#alac {
+    float: left;
+/* FIXME: maybe use an image for this so that we don't have to have a fixed height for it not to look broken */
+    margin-right: -1px;
+    border-right: 1px solid white;
+}
+#jsmad {
+    float: right;
+    margin-left: -1px;
+    border-left: 1px solid white;
+}
+#players h2 {
+    text-align: center;
+}
+#players p {
+    margin-left: 10px;
+    margin-right: 10px;
 }
 
-form {
-    display: inline-block;
-}
-
-label {
-    font-size: 18px;
-    line-height: 22px;
-    margin-bottom: 3px;
-    text-shadow: rgba(255,255,255,0.3) 1px 1px 1px;
-    display: block;
-}
-
-input {
-    font-size: 18px;
-    border-radius: 2px;
-    border: 1px solid black;
+.clear {
+    clear: both;
 }
