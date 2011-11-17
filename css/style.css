@@ -3,7 +3,7 @@ body {
     margin: 0;
     padding: 0;
 /* TODO: actually have some pretty theme here*/
-    background: #102030 url(../images/noise.png);
+    background: #102030 url(/images/noise.png);
     color: #ddd;
     margin: 0;
 }
@@ -21,21 +21,12 @@ header {
 
 #players {
     background-color: rgba(0,0,0,0.5);
-    background-image: url(../images/whitecolumn.gif);
-    background-position: center center;
-    background-repeat: repeat-y;
     border: 2px solid white;
     box-shadow: 0 0 8px black, 0 0 14px black inset;
     border-radius: 5px;
 }
 #players > div {
-    width: 50%;
-}
-#alac {
-    float: left;
-}
-#jsmad {
-    float: right;
+    width: 100%;
 }
 #players h2 {
     text-align: center;

@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>ofmlabs codecs :: JSMad</title>
+        <link rel="stylesheet" href="/css/style.css" />
+    </head>
+    <body>
+        <div id="container">
+            <header>
+                <h1>ofmlabs codecs</h1>
+                <h2>A suite of JavaScript media codecs</h2>
+            </header>
+            <div id="players">
+                <div id="jsmad">
+                    <h2>jsmad / mp3</h2>
+                    <p>jsmad is a port of the libmad, and the original proof that JavaScript actually is powerful enough to do audio decoding.</p>
+                </div>
+                <br class="clear" />
+            </div>
+        </div>
+        <script src="/js/jquery.min.js"></script>
+        <script src="/js/ui/player.js"></script>
+        <script>
+(function(){
+
+var madUI, madPlayer;
+
+Mad.Player.fromURL('/media/sample.mp3', function(player) {
+    madPlayer = player;
+
+    madUI = new Player(document.getElementById('jsmad'));
+
+    madUI.onplay = function(){
+        madPlayer.setPlaying(true);
+    };
+    madUI.onpause = function(){
+        madPlayer.setPlaying(false);
+    };
+    madUI.onseek = function(time){
+        jsmad.updatePlayHead(time);
+    }
+    
+});
+
+}());
+        </script>
+    </body>
+</html>
