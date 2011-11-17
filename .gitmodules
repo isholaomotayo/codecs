@@ -1,3 +1,6 @@
 [submodule "js/audiolib.js"]
 	path = js/audiolib.js
 	url = g:jussi-kalliokoski/audiolib.js
+[submodule "js/jsmad"]
+	path = js/jsmad
+	url = g:ofmlabs/jsmad
