@@ -47,9 +47,9 @@ Player.prototype = {
         $playpause.click(function (e) {
             if (!self.onplay || !self.onpause) return;
 
-            self.isPlaying = !self.isPlaying;
-            $playpause.html('<span>' + (self.isPlaying ? '&#x25AE;&#x25AE;' : '&#x25B6;') + '</span>');
-            self[self.isPlaying ? 'onpause' : 'onplay']();
+            self.updatePlaying(!self.isPlaying);
+
+            self[self.isPlaying ? 'onplay' : 'onpause']();
         });
         $playpause.html('<span>&#x25B6;</span>');
     },
@@ -61,6 +61,11 @@ Player.prototype = {
     },
     updateTime: function (time) {
         this.UI.timedisplay.innerHTML = time;
+    },
+    updatePlaying: function(playing) {
+        if (playing === this.isPlaying) return;
+        this.isPlaying = playing;
+        this.UI.playpause.innerHTML = '<span>' + (this.isPlaying ? '&#x25AE;&#x25AE;' : '&#x25B6;') + '</span>';
     },
     parentElement: null,
     onseek: null,
