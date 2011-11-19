@@ -20,6 +20,7 @@
         </div>
         <script src="/js/jquery.min.js"></script>
         <script src="/js/ui/player.js"></script>
+        <script src="/js/audiolib.js/lib/audiolib.js"></script>
 
         <script src="/js/jsmad/src/mad.js"></script>
         <script src="/js/jsmad/src/rq_table.js"></script>
@@ -51,6 +52,9 @@
         <script>
 (function(){
 
+// UA sniffing... *sniff* TODO: remove this after nobody uses that browser anymore, or if feature detection is found.
+Sink.doInterval.backgroundWork = !/firefox\/8.0/i.test(navigator.userAgent);
+
 var madUI, madPlayer;
 
 Mad.Player.fromURL('/media/sample.mp3', function(player) {
@@ -65,13 +69,18 @@ Mad.Player.fromURL('/media/sample.mp3', function(player) {
         madPlayer.setPlaying(false);
     };
     madUI.onseek = function(time){
-        madUI.updatePlayHead(time);
-    }
+        // TODO: Add this when supported.
+    };
 
     madPlayer.onPause = madPlayer.onPlay = function(){
-        //madUI.updatePlaying(madPlayer.isPlaying);
+        madUI.updatePlaying(!madPlayer.isPlaying);
     };
-    
+    madPlayer.onProgress = function(current, total, preload) {
+        madUI.updatePlayHead(current / total);
+        madUI.updateLoadHead(preload);
+    };
+
+    madPlayer.createDevice();
 });
 
 }());
