@@ -111,3 +111,15 @@ header {
     background-color: #102030;
     box-shadow: 0 0 5px #102030;
 }
+
+.player > canvas.visualizer {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 8px;
+    border: 1px inset #102030;
+    border-radius: 4px;
+    width: 400px;
+    height: 150px;
+    box-shadow: 0 0 10px #102030;
+}

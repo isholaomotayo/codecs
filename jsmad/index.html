@@ -20,6 +20,7 @@
         </div>
         <script src="/js/jquery.min.js"></script>
         <script src="/js/ui/player.js"></script>
+        <script src="/js/ui/visualizer.js"></script>
         <script src="/js/audiolib.js/lib/audiolib.js"></script>
 
         <script src="/js/jsmad/src/mad.js"></script>
@@ -55,7 +56,7 @@
 // UA sniffing... *sniff* TODO: remove this after nobody uses that browser anymore, or if feature detection is found.
 Sink.doInterval.backgroundWork = !/firefox\/8.0/i.test(navigator.userAgent);
 
-var madUI, madPlayer;
+var madUI, madPlayer, madVisual;
 
 Mad.Player.fromURL('/media/sample.mp3', function(player) {
     madPlayer = player;
@@ -81,9 +82,34 @@ Mad.Player.fromURL('/media/sample.mp3', function(player) {
     };
 
     madPlayer.createDevice();
+
+    fft = audioLib.FFT(madPlayer.sampleRate, 4096);
+
+    madPlayer._refill = madPlayer.refill;
+    madPlayer.refill = function(buffer, channelCount) {
+        var r = madPlayer._refill.apply(this, arguments), i, n, s;
+
+        for (i=0; i<buffer.length; i+=channelCount) {
+            s = 0;
+            for (n=0; n<channelCount; n++) {
+                s += buffer[i+n];
+            }
+            fft.pushSample(s / channelCount);
+        }
+
+        return r;
+    };
+
+    madVisual = new Visualizer(madUI.UI.visualizer, fft);
 });
 
 }());
         </script>
+        <a href="http://github.com/ofmlabs/jsmad">
+            <img
+            style="position: absolute; top: 0; right: 0; border: 0;"
+            alt="Fork me on GitHub"
+            src="https://a248.e.akamai.net/assets.github.com/img/4c7dc970b89fd04b81c8e221ba88ff99a06c6b61/687474703a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f77686974655f6666666666662e706e67" />
+        </a>
     </body>
 </html>
