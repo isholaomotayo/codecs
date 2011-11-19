@@ -74,7 +74,7 @@ Mad.Player.fromURL('/media/sample.mp3', function(player) {
     };
 
     madPlayer.onPause = madPlayer.onPlay = function(){
-        madUI.updatePlaying(!madPlayer.isPlaying);
+        madUI.updatePlaying(madPlayer.playing);
     };
     madPlayer.onProgress = function(current, total, preload) {
         madUI.updatePlayHead(current / total);
