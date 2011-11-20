@@ -51,59 +51,66 @@
 
         <script src="/js/jsmad/src/player.js"></script>
         <script>
-(function(){
-
 // UA sniffing... *sniff* TODO: remove this after nobody uses that browser anymore, or if feature detection is found.
 Sink.doInterval.backgroundWork = !/firefox\/8.0/i.test(navigator.userAgent);
 
-var madUI, madPlayer, madVisual;
+function createMadPlayer(url, isFile){
+    var ret = {};
 
-Mad.Player.fromURL('/media/sample.mp3', function(player) {
-    madPlayer = player;
+    Mad.Player[isFile ? 'fromFile' : 'fromURL'](url, function(player) {
+        var madUI, madPlayer, madVisual, fft;
+        madPlayer = player;
 
-    madUI = new Player(document.getElementById('jsmad'));
+        madUI = new Player(document.getElementById('jsmad'));
 
-    madUI.onplay = function(){
-        madPlayer.setPlaying(true);
-    };
-    madUI.onpause = function(){
-        madPlayer.setPlaying(false);
-    };
-    madUI.onseek = function(time){
-        // TODO: Add this when supported.
-    };
+        madUI.onplay = function(){
+            madPlayer.setPlaying(true);
+        };
+        madUI.onpause = function(){
+            madPlayer.setPlaying(false);
+        };
+        madUI.onseek = function(time){
+            // TODO: Add this when supported.
+        };
 
-    madPlayer.onPause = madPlayer.onPlay = function(){
-        madUI.updatePlaying(madPlayer.playing);
-    };
-    madPlayer.onProgress = function(current, total, preload) {
-        madUI.updatePlayHead(current / total);
-        madUI.updateLoadHead(preload);
-    };
+        madPlayer.onPause = madPlayer.onPlay = function(){
+            madUI.updatePlaying(madPlayer.playing);
+        };
+        madPlayer.onProgress = function(current, total, preload) {
+            madUI.updatePlayHead(current / total);
+            madUI.updateLoadHead(preload);
+        };
 
-    madPlayer.createDevice();
+        madPlayer.createDevice();
 
-    fft = audioLib.FFT(madPlayer.sampleRate, 4096);
+        fft = audioLib.FFT(madPlayer.sampleRate, 4096);
 
-    madPlayer._refill = madPlayer.refill;
-    madPlayer.refill = function(buffer, channelCount) {
-        var r = madPlayer._refill.apply(this, arguments), i, n, s;
+        madPlayer._refill = madPlayer.refill;
+        madPlayer.refill = function(buffer, channelCount) {
+            var r = madPlayer._refill.apply(this, arguments), i, n, s;
 
-        for (i=0; i<buffer.length; i+=channelCount) {
-            s = 0;
-            for (n=0; n<channelCount; n++) {
-                s += buffer[i+n];
+            for (i=0; i<buffer.length; i+=channelCount) {
+                s = 0;
+                for (n=0; n<channelCount; n++) {
+                    s += buffer[i+n];
+                }
+                fft.pushSample(s / channelCount);
             }
-            fft.pushSample(s / channelCount);
-        }
 
-        return r;
-    };
+            return r;
+        };
 
-    madVisual = new Visualizer(madUI.UI.visualizer, fft);
-});
+        madVisual = new Visualizer(madUI.UI.visualizer, fft);
 
-}());
+        ret.UI      = madUI;
+        ret.player  = madPlayer;
+        ret.visual  = madVisual;
+        ret.fft     = fft;
+    });
+    return ret;
+}
+
+var madPlayer = createMadPlayer('/media/fonksquish/planets.mp3');
         </script>
         <a href="http://github.com/ofmlabs/jsmad">
             <img
