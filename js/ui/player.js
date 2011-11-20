@@ -21,13 +21,15 @@ Player.prototype = {
     createUI: function() {
         this.UI = {
             container:    elem(0, 'player'),
-            playpause:    elem('button', 'playpause'),
+            playpause:    elem('button', 'playpause play'),
             seekbar:    elem(0, 'seekbar'),
             timedisplay:    elem(0, 'timedisplay'),
             visualizer:    elem('canvas', 'visualizer'),
             loadhead:    elem(0, 'loadhead'),
             playhead:    elem(0, 'playhead'),
         };
+
+        this.UI.container.setAttribute('tabindex', 0);
 
         append(this.parentElement, this.UI.container);
 
@@ -44,14 +46,20 @@ Player.prototype = {
         });
 
         var $playpause = $(this.UI.playpause);
-        $playpause.click(function (e) {
-            if (!self.onplay || !self.onpause) return;
+
+        function eventPlayPause(e) {
+            if (!self.onplay || !self.onpause || (e.which !== 1 && e.which !== 32)) return;
 
             self.updatePlaying(!self.isPlaying);
 
             self[self.isPlaying ? 'onplay' : 'onpause']();
-        });
+        }
+
+        $playpause.click(eventPlayPause);
         $playpause.html('<span>&#x25B6;</span>');
+
+        var $container = $(this.UI.container);
+        $container.keyup(eventPlayPause);
     },
     updateLoadHead: function (position) {
         this.UI.loadhead.style.width = Math.floor(this.UI.seekbar.clientWidth * position) + 'px';
@@ -66,6 +74,8 @@ Player.prototype = {
         if (playing === this.isPlaying) return;
         this.isPlaying = playing;
         this.UI.playpause.innerHTML = '<span>' + (this.isPlaying ? '&#x25AE;&#x25AE;' : '&#x25B6;') + '</span>';
+        this.UI.playpause.classList.remove(this.isPlaying ? 'play' : 'pause');
+        this.UI.playpause.classList.add(this.isPlaying ? 'pause' : 'play');
     },
     parentElement: null,
     onseek: null,
