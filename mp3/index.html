@@ -85,10 +85,7 @@ function createMadPlayer(url, isFile){
 
         fft = audioLib.FFT(madPlayer.sampleRate, 4096);
 
-        madPlayer._refill = madPlayer.refill;
-        madPlayer.refill = function(buffer, channelCount) {
-            var r = madPlayer._refill.apply(this, arguments), i, n, s;
-
+        madPlayer.onPostProcessing = function(buffer, channelCount) {
             for (i=0; i<buffer.length; i+=channelCount) {
                 s = 0;
                 for (n=0; n<channelCount; n++) {
@@ -96,8 +93,6 @@ function createMadPlayer(url, isFile){
                 }
                 fft.pushSample(s / channelCount);
             }
-
-            return r;
         };
 
         madVisual = new Visualizer(madUI.UI.visualizer, fft);
@@ -106,11 +101,18 @@ function createMadPlayer(url, isFile){
         ret.player  = madPlayer;
         ret.visual  = madVisual;
         ret.fft     = fft;
+
+        if (ret.onready) {
+            ret.onready();
+        }
     });
     return ret;
 }
 
 var madPlayer = createMadPlayer('/media/fonksquish/planets.mp3');
+madPlayer.onready = function() {
+    madPlayer.UI.updateSong('fONKSQUISh', 'Planets (DJ Apt One Remix)');
+};
         </script>
         <a href="http://github.com/ofmlabs/jsmad">
             <img

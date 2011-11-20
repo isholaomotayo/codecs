@@ -20,20 +20,22 @@ Player.prototype = {
     isPlaying: false,
     createUI: function() {
         this.UI = {
-            container:    elem(0, 'player'),
-            playpause:    elem('button', 'playpause play'),
-            seekbar:    elem(0, 'seekbar'),
+            container:      elem(0, 'player'),
+            songartist:     elem(0, 'song-artist'),
+            songtitle:      elem(0, 'song-title'),
+            playpause:      elem('button', 'playpause play'),
+            seekbar:        elem(0, 'seekbar'),
             timedisplay:    elem(0, 'timedisplay'),
-            visualizer:    elem('canvas', 'visualizer'),
-            loadhead:    elem(0, 'loadhead'),
-            playhead:    elem(0, 'playhead'),
+            visualizer:     elem('canvas', 'visualizer'),
+            loadhead:       elem(0, 'loadhead'),
+            playhead:       elem(0, 'playhead'),
         };
 
         this.UI.container.setAttribute('tabindex', 0);
 
         append(this.parentElement, this.UI.container);
 
-        append(this.UI.container, this.UI.playpause, this.UI.seekbar, this.UI.visualizer);
+        append(this.UI.container, this.UI.songartist, this.UI.songtitle, this.UI.playpause, this.UI.seekbar, this.UI.visualizer);
 
         append(this.UI.seekbar, this.UI.loadhead, this.UI.playhead, this.UI.timedisplay);
 
@@ -76,6 +78,10 @@ Player.prototype = {
         this.UI.playpause.innerHTML = '<span>' + (this.isPlaying ? '&#x25AE;&#x25AE;' : '&#x25B6;') + '</span>';
         this.UI.playpause.classList.remove(this.isPlaying ? 'play' : 'pause');
         this.UI.playpause.classList.add(this.isPlaying ? 'pause' : 'play');
+    },
+    updateSong: function(artist, title) {
+        this.UI.songartist.innerHTML    = artist;
+        this.UI.songtitle.innerHTML     = title;
     },
     parentElement: null,
     onseek: null,

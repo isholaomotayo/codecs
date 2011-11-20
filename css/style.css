@@ -43,6 +43,15 @@ header {
 .player {    
 }
 
+.player > .song-title, .player > .song-artist {
+    font-size: 120%;
+    text-align: center;
+    margin: 8px;
+}
+.player > .song-artist {
+    font-size: 150%;
+}
+
 .player > button.playpause {
     display: block;
     margin-left: auto;
