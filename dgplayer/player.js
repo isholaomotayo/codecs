@@ -232,10 +232,10 @@ DGPlayer = (function() {
         },
         
         off: function(event, fn) {
-            var events = events[event],
-                index = events.indexOf(fn);
+            var eventsOf = events[event],
+                index = eventsOf.indexOf(fn);
                 
-            ~index && events.splice(index, 1);
+            ~index && eventsOf.splice(index, 1);
         }
     };
     

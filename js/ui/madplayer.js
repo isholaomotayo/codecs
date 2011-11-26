@@ -1,12 +1,10 @@
-// UA sniffing... *sniff* TODO: remove this after nobody uses that browser anymore, or if feature detection is found.
 function createMadPlayer(url, isFile){
     var ret = {};
 
     Mad.Player[isFile ? 'fromFile' : 'fromURL'](url, function(player) {
         var madUI, madPlayer, madVisual, fft, gain;
-        madPlayer = player;
-
-        madUI = DGPlayer;
+        madPlayer   = player;
+        madUI       = DGPlayer;
 
         madUI.on('play', function(){
             madPlayer.setPlaying(true);
@@ -25,15 +23,13 @@ function createMadPlayer(url, isFile){
         };
         madPlayer.onProgress = function(current, total, preload) {
             madUI.bufferProgress = Math.round(preload * 100);
-            madUI.seekTime = current;
-            madUI.duration = total;
+            madUI.seekTime = Math.floor(current * 1000);
+            madUI.duration = Math.floor(total * 1000);
         };
 
         madPlayer.createDevice();
 
         fft         = audioLib.FFT(madPlayer.sampleRate, 4096);
-        gain        = audioLib.Gain.createBufferBased(madPlayer.channelCount, madPlayer.sampleRate, madUI.volume / 100);
-        gain.mix    = 1.0;
 
         madPlayer.onPostProcessing = function(buffer, channelCount) {
             for (i=0; i<buffer.length; i+=channelCount) {
@@ -44,10 +40,9 @@ function createMadPlayer(url, isFile){
                 fft.pushSample(s / channelCount);
             }
 
-            gain.append(buffer, channelCount);
         };
 
-        madVisual = new Visualizer(madUI.UI.visualizer, fft);
+        //madVisual = new Visualizer(madUI.UI.visualizer, fft);
 
         ret.UI      = madUI;
         ret.player  = madPlayer;

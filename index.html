@@ -50,12 +50,12 @@
             </div>
         
             <div class="seek">
-                <span>2:03</span>
+                <span></span>
                 <div class="track">
-                    <div class="loaded" style="width: 129.95999999999998px; "></div>
-                    <div class="progress" style="width: 89.14390611337203px; "></div>
+                    <div class="loaded" style="width: 0"></div>
+                    <div class="progress" style="width: 0; "></div>
                 </div>
-                <span>-3:11</span>
+                <span></span>
             </div>
         </div>
         <p class="description">
@@ -142,14 +142,24 @@
     <script src="/js/jsmad/src/player.js"></script>
 
     <script>        
+// UA sniffing... *sniff* TODO: remove this after nobody uses that browser anymore, or if feature detection is found.
 Sink.doInterval.backgroundWork = !/firefox\/8.0/i.test(navigator.userAgent);
 
-var madPlayer = createMadPlayer('/media/fonksquish/planets.mp3');
-madPlayer.onready = function() {
-    DGPlayer.songTitle = "Planets (DJ Apt One Remix)";
-    DGPlayer.songArtist = "fONKSQUISh";
-    DGPlayer.coverArt = "images/fallback_album_art.png"
-};
+var madPlayer;
+
+DGPlayer.on('play', function play(){
+    madPlayer = createMadPlayer('/media/fonksquish/planets.mp3');
+ 
+    madPlayer.onready = function() {
+        DGPlayer.songTitle = "Planets (DJ Apt One Remix)";
+        DGPlayer.songArtist = "fONKSQUISh";
+        DGPlayer.coverArt = "images/fallback_album_art.png"
+
+        madPlayer.player.setPlaying(true);
+    };
+
+    DGPlayer.off('play', play);
+});
     </script>
 
 </body></html>

@@ -9,10 +9,10 @@
 }
 
 body {
-    background: url(resources/bg.png) 10px 20px;
-    background: -webkit-radial-gradient(transparent 60%, rgba(21, 33, 100, 0.3)), url(resources/bg.png) 10px 20px;
-    background: -moz-radial-gradient(transparent 60%, rgba(21, 33, 100, 0.3)), url(resources/bg.png) 10px 20px;
-    background: -o-radial-gradient(transparent 60%, rgba(21, 33, 100, 0.3)), url(resources/bg.png) 10px 20px;
+    background: url(/images/bg.png) 10px 20px;
+    background: -webkit-radial-gradient(transparent 60%, rgba(21, 33, 100, 0.3)), url(/images/bg.png) 10px 20px;
+    background: -moz-radial-gradient(transparent 60%, rgba(21, 33, 100, 0.3)), url(/images/bg.png) 10px 20px;
+    background: -o-radial-gradient(transparent 60%, rgba(21, 33, 100, 0.3)), url(/images/bg.png) 10px 20px;
     background-color: #6590B7;
     width:  810px;
     margin: 40px auto;
