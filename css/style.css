@@ -1,18 +1,18 @@
 @font-face {
     font-family: 'Museo Slab';
-    src: url('resources/MuseoSlab.eot');
-    src: url('resources/MuseoSlab.woff') format('woff'),
-         url('resources/MuseoSlab.eot?#iefix') format('embedded-opentype'),
-         url('resources/MuseoSlab.ttf') format('truetype');
+    src: url('../resources/MuseoSlab.eot');
+    src: url('../resources/MuseoSlab.woff') format('woff'),
+         url('../resources/MuseoSlab.eot?#iefix') format('embedded-opentype'),
+         url('../resources/MuseoSlab.ttf') format('truetype');
     font-weight: normal;
     font-style: normal;
 }
 
 body {
-    background: url(/images/bg.png) 10px 20px;
-    background: -webkit-radial-gradient(transparent 60%, rgba(21, 33, 100, 0.3)), url(/images/bg.png) 10px 20px;
-    background: -moz-radial-gradient(transparent 60%, rgba(21, 33, 100, 0.3)), url(/images/bg.png) 10px 20px;
-    background: -o-radial-gradient(transparent 60%, rgba(21, 33, 100, 0.3)), url(/images/bg.png) 10px 20px;
+    background: url(../resources/bg.png) 10px 20px;
+    background: -webkit-radial-gradient(transparent 60%, rgba(21, 33, 100, 0.3)), url(../resources/bg.png) 10px 20px;
+    background: -moz-radial-gradient(transparent 60%, rgba(21, 33, 100, 0.3)), url(../resources/bg.png) 10px 20px;
+    background: -o-radial-gradient(transparent 60%, rgba(21, 33, 100, 0.3)), url(../resources/bg.png) 10px 20px;
     background-color: #6590B7;
     width:  810px;
     margin: 40px auto;
@@ -58,8 +58,11 @@ p.description {
     margin-top: 30px;
 }
 
-p.description a, section h3 a {
+p.description a, section h3 a, footer a {
     color: #dcdee0;
+    -webkit-transition: text-shadow 250ms;
+    -moz-transition: text-shadow 250ms;
+    -o-transition: text-shadow 250ms;
 }
 
 p.description a:hover {
@@ -102,4 +105,8 @@ footer {
     color: #DCDEE0;
     text-shadow: rgba(0, 0, 0, 0.7) 0 1px 3px;
     clear: both;
+}
+
+footer a {
+    text-decoration: none;
 }

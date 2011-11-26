@@ -27,12 +27,6 @@
     outline: none;
 }
 
-/* TODO: Is there a selector that actually becomes active when the player is selected? */
-.player::focus {
-    border: 1px solid rgba(255, 60, 60, 0.85);
-    background: #111;
-}
-
 .player::selection {
     background:transparent
 }
@@ -218,12 +212,11 @@
 
 .player .visualization {
     background-color: #141517;
+    box-shadow: rgba(255, 255, 255, 0.1) 0 1px 0, black 0 1px 4px inset;
     border-radius: 7px;
-    margin: 10px auto 10px auto;
-    border: 1px inset #202329;
-    box-shadow: 0 0 2px #151619;
+    margin: 10px 0;
     display: inline-block;
     position: relative;
-    width: 330px;
+    width: 100%;
     height: 30px;
 }
