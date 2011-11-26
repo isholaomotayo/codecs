@@ -220,7 +220,8 @@
     background-color: #141517;
     border-radius: 7px;
     margin: 10px auto 10px auto;
-    border: 1px inset #202329;
+    border: 1px solid #202329;
+    border-color: black #202329 #202329 black;
     box-shadow: 0 0 2px #151619;
     display: inline-block;
     position: relative;
