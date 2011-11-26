@@ -1,29 +1,152 @@
 <!DOCTYPE html>
-<html>
-    <head>
-        <title>ofmlabs codecs</title>
-        <link rel="stylesheet" href="css/style.css" />
-    </head>
-    <body>
-        <div id="container">
-            <header>
-                <h1>ofmlabs codecs</h1>
-                <h2>A suite of JavaScript media codecs</h2>
-            </header>
-            <div id="players">
-                <div id="alac">
-                    <h2>alac.js</h2>
-                    <p>alac.js is a JavaScript port of the recently open sourced ALAC decoder/encoder.</p>
-                    <p>Hold your horses, cowboy! alac isn't quite there yet.</p>
+<!-- saved from url=(0049)http://dl.dropbox.com/u/534786/codecs/player.html -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
+    
+    <link rel="stylesheet" href="dgplayer/player.css">
+    <!--[if IE 9]>
+    <script src="resources/classlist.js"></script>
+    <![endif]-->
+</head>
+<body>
+    <header>
+        <img src="/images/logo.png">
+        <h1>ofmlabs codecs</h1>
+        <h2>A suite of JavaScript audio codecs</h2>
+    </header>
+    
+    <p class="description">
+        JavaScript is becoming more and more powerful.  From 
+        <a href="https://github.com/mbebenita/Broadway">H.264 decoding</a> to 
+        <a href="https://github.com/mozilla/pdf.js">PDF rendering</a>, JS is 
+        taking over the world.  At <a href="http://ofmlabs.org/">ofmlabs</a> 
+        we are invested in web audio, and with <a href="https://github.com/nddrylliog/jsmad">JSMad</a> 
+        showed that decoding audio purely in JS is possible.  And now we've done it again.  
+        Introducing <a href="https://github.com/ofmlabs/alac.js">alac.js</a>, a port of the 
+        recently open sourced <a href="http://alac.macosforge.org/">Apple Lossless</a> decoder to JavaScript.  
+        Now it is possible to play MP3 and Apple Lossless even in browsers without native support.  
+        Check out the side-by-side demos below to hear JavaScript rocking out!
+    </p>
+    
+    <section>
+        <h3><a href="https://github.com/nddrylliog/jsmad">JSMad</a> &ndash; MP3 in JS</h3>
+        <div class="player">
+            <div class="avatar">
+                <img src="/images/fallback_album_art.png">
+            </div>
+        
+            <p>Planets (DJ Apt One Remix)</p>
+            <span>fONKSQUISh</span>
+        
+            <div class="button"></div>
+        
+            <div class="volume">
+                <img src="./player_files/volume_high.png">
+                <div class="track">
+                    <div class="progress" style="height: 27px; "></div>
+                    <div class="handle" style="-webkit-transform: translate3d(0px, -19px, 0px); "></div>
                 </div>
-                <div id="jsmad">
-                    <h2>jsmad / mp3</h2>
-                    <p>jsmad is a port of the libmad, and the original proof that JavaScript actually is powerful enough to do audio decoding.</p>
+                <img src="./player_files/volume_low.png">
+            </div>
+        
+            <div class="seek">
+                <span>2:03</span>
+                <div class="track">
+                    <div class="loaded" style="width: 129.95999999999998px; "></div>
+                    <div class="progress" style="width: 89.14390611337203px; "></div>
                 </div>
-                <br class="clear" />
+                <span>-3:11</span>
             </div>
         </div>
-        <script src="js/jquery.min.js"></script>
-        <script src="js/ui/player.js"></script>
-    </body>
-</html>
+        <p class="description">
+            JSMad was the first proof that JS audio decoding
+            is possible and is a port of libmad, a C based 
+            MPEG audio decoder.  MP3 is probably the most
+            common audio format out there.  It is designed
+            for small file sizes but compromises on quality.
+        </p>
+    </section>
+    
+    <section>
+        <h3><a href="https://github.com/ofmlabs/alac.js">ALAC.js</a> – Apple Lossless in JS</h3>
+        <div class="player">
+            <div class="avatar">
+                <img src="./player_files/fallback_album_art.png">
+            </div>
+        
+            <p>Title</p>
+            <span>Artist</span>
+        
+            <div class="button"></div>
+        
+            <div class="volume">
+                <img src="./player_files/volume_high.png">
+                <div class="track">
+                    <div class="progress"></div>
+                    <div class="handle"></div>
+                </div>
+                <img src="./player_files/volume_low.png">
+            </div>
+        
+            <div class="seek">
+                <span>0:00</span>
+                <div class="track">
+                    <div class="loaded"></div>
+                    <div class="progress"></div>
+                </div>
+                <span>-0:00</span>
+            </div>
+        </div>
+        <p class="description">
+            ALAC.js is a port of the recently open sourced 
+            original Apple Lossless decoder to JavaScript. 
+            As its name implies, ALAC is a lossless format
+            designed to reduce file size without compromizing
+            quality.  Can you tell the difference?
+        </p>
+    </section>
+    
+    <footer>© 2011 Ofmlabs.  All rights reserved.</footer>
+    
+    <script src="/dgplayer/player.js"></script>
+    <script src="/js/ui/madplayer.js"></script>
+    <script src="/js/ui/visualizer.js"></script>
+    <script src="/js/audiolib.js/lib/audiolib.js"></script>
+
+    <script src="/js/jsmad/src/mad.js"></script>
+    <script src="/js/jsmad/src/rq_table.js"></script>
+    <script src="/js/jsmad/src/imdct_s.js"></script>
+    <script src="/js/jsmad/src/huffman.js"></script>
+    <script src="/js/jsmad/src/bit.js"></script>
+    <script src="/js/jsmad/src/stream.js"></script>
+    <script src="/js/jsmad/src/layer3.js"></script>
+    <script src="/js/jsmad/src/frame.js"></script>
+    <script src="/js/jsmad/src/synth.js"></script>
+
+    <script src="/js/jsmad/src/arraybuffer/bytestream.js"></script>
+    <script src="/js/jsmad/src/arraybuffer/filestream.js"></script>
+    <script src="/js/jsmad/src/arraybuffer/substream.js"></script>
+    <script src="/js/jsmad/src/arraybuffer/arraystream.js"></script>
+    <script src="/js/jsmad/src/arraybuffer/ajaxstream.js"></script>
+
+    <script src="/js/jsmad/src/binarystring/bytestream.js"></script>
+    <script src="/js/jsmad/src/binarystring/filestream.js"></script>
+    <script src="/js/jsmad/src/binarystring/substream.js"></script>
+    <script src="/js/jsmad/src/binarystring/stringstream.js"></script>
+    <script src="/js/jsmad/src/binarystring/ajaxstream.js"></script>
+
+    <script src="/js/jsmad/src/id3v22stream.js"></script>
+    <script src="/js/jsmad/src/id3v23stream.js"></script>
+    <script src="/js/jsmad/src/mp3file.js"></script>
+
+    <script>        
+Sink.doInterval.backgroundWork = !/firefox\/8.0/i.test(navigator.userAgent);
+
+var madPlayer = createMadPlayer('/media/fonksquish/planets.mp3');
+madPlayer.onready = function() {
+    DGPlayer.songTitle = "Planets (DJ Apt One Remix)";
+    DGPlayer.songArtist = "fONKSQUISh";
+    DGPlayer.coverArt = "images/fallback_album_art.png"
+};
+    </script>
+
+</body></html>
