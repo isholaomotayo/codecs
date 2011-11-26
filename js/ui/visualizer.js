@@ -33,7 +33,7 @@ Visualizer.prototype = {
 
             ctx.save();
 
-            ctx.fillStyle = 'rgba(20,21,23,0.2)';
+            ctx.fillStyle = 'rgba(20,21,23,0.32)';
             ctx.fillRect(0, 0, w, h); 
 
             grad.addColorStop(0.0, 'rgba(0,0,0,0.5)');
@@ -52,7 +52,7 @@ Visualizer.prototype = {
             ctx.moveTo(0, 0); 
 
             for (i=0; i<fft.spectrum.length; i++){
-                    ctx.lineTo(i, fft.spectrum[i]);
+                    ctx.lineTo(i, fft.spectrum[i] + 0.001);
             }   
 
             while(i--){
