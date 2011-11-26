@@ -146,8 +146,8 @@
 
 .player .volume .track .handle.animatable {
     -webkit-transition: -webkit-transform 200ms;
-    -moz-transition: left 200ms;
-    -o-transition: left 200ms;
+    -moz-transition: bottom 200ms;
+    -o-transition: bottom 200ms;
 }
 
 .player .volume img {
