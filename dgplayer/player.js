@@ -83,7 +83,11 @@ DGPlayer = (function() {
             
         button.onclick = function() {
             emit(playing ? "pause" : "play");
-        }
+        };
+
+        root.addEventListener('keyup', function(e) {
+            e.which === 32 && emit(playing ? "pause" : "play");
+        });
         
         function setPlaying(play) {
             if (playing = play)

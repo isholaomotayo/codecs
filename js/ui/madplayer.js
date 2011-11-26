@@ -30,6 +30,8 @@ function createMadPlayer(url, isFile){
         madPlayer.createDevice();
 
         fft         = audioLib.FFT(madPlayer.sampleRate, 4096);
+        gain        = audioLib.GainController.createBufferBased(madPlayer.channelCount, madPlayer.sampleRate, madUI.volume / 100);
+        gain.mix    = 1.0;
 
         madPlayer.onPostProcessing = function(buffer, channelCount) {
             for (i=0; i<buffer.length; i+=channelCount) {
@@ -40,9 +42,10 @@ function createMadPlayer(url, isFile){
                 fft.pushSample(s / channelCount);
             }
 
+            gain.append(buffer, channelCount);
         };
 
-        //madVisual = new Visualizer(madUI.UI.visualizer, fft);
+        madVisual = new Visualizer(document.querySelector('.player canvas.visualization'), fft);
 
         ret.UI      = madUI;
         ret.player  = madPlayer;

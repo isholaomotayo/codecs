@@ -11,7 +11,7 @@
 .player {
     padding: 20px;
     width: 325px;
-    height: 190px;
+    height: 220px;
     background: #202329;
     background: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjxkZWZzPjxsaW5lYXJHcmFkaWVudCBpZD0iZ3JhZCIgeDE9IjUwJSIgeTE9IjAlIiB4Mj0iNTAlIiB5Mj0iMTAwJSI+PHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iIzMyMzYzQyIgLz48c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiMxNzE5MUUiIC8+PC9saW5lYXJHcmFkaWVudD48L2RlZnM+PHJlY3Qgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgc3R5bGU9ImZpbGw6dXJsKCNncmFkKTsiIC8+PC9zdmc+);
     background: -webkit-linear-gradient(#32363C, #17191e);
@@ -24,6 +24,13 @@
     -moz-user-select: none;
     cursor: default;
     position: relative;
+    outline: none;
+}
+
+/* TODO: Is there a selector that actually becomes active when the player is selected? */
+.player::focus {
+    border: 1px solid rgba(255, 60, 60, 0.85);
+    background: #111;
 }
 
 .player::selection {
@@ -207,4 +214,16 @@
     background: -webkit-linear-gradient(#202328, #191B1E);
     background: -moz-linear-gradient(#202328, #191B1E);
     background: -o-linear-gradient(#202328, #191B1E);
+}
+
+.player .visualization {
+    background-color: #141517;
+    border-radius: 7px;
+    margin: 10px auto 10px auto;
+    border: 1px inset #202329;
+    box-shadow: 0 0 2px #151619;
+    display: inline-block;
+    position: relative;
+    width: 330px;
+    height: 30px;
 }

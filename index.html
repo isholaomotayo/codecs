@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-<!-- saved from url=(0049)http://dl.dropbox.com/u/534786/codecs/player.html -->
 <html><head><meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
     
     <link rel="stylesheet" href="css/style.css">
@@ -7,11 +6,12 @@
     <!--[if IE 9]>
     <script src="resources/classlist.js"></script>
     <![endif]-->
+    <title>ofmlabs codecs</title>
 </head>
 <body>
     <header>
         <img src="/images/logo.png">
-        <h1>ofmlabs codecs</h1>
+        <h1><a href="http://ofmlabs.org">ofmlabs</a> codecs</h1>
         <h2>A suite of JavaScript audio codecs</h2>
     </header>
     
@@ -30,7 +30,7 @@
     
     <section>
         <h3><a href="https://github.com/nddrylliog/jsmad">JSMad</a> &ndash; MP3 in JS</h3>
-        <div class="player">
+        <div class="player" id="jsmad" tabindex="0">
             <div class="avatar">
                 <img src="/images/fallback_album_art.png">
             </div>
@@ -57,6 +57,8 @@
                 </div>
                 <span></span>
             </div>
+
+            <canvas class="visualization"></canvas>
         </div>
         <p class="description">
             JSMad was the first proof that JS audio decoding
@@ -69,9 +71,9 @@
     
     <section>
         <h3><a href="https://github.com/ofmlabs/alac.js">ALAC.js</a> – Apple Lossless in JS</h3>
-        <div class="player">
+        <div class="player" tabindex="0">
             <div class="avatar">
-                <img src="/dgplayer/fallback_album_art.png">
+                <img src="/images/fallback_album_art.png">
             </div>
         
             <p>Title</p>
@@ -80,12 +82,12 @@
             <div class="button"></div>
         
             <div class="volume">
-                <img src="/dgplayer/volume_high.png">
+                <img src="/dgplayer/resources/volume_high.png">
                 <div class="track">
                     <div class="progress"></div>
                     <div class="handle"></div>
                 </div>
-                <img src="/dgplayer/volume_low.png">
+                <img src="/dgplayer/resources/volume_low.png">
             </div>
         
             <div class="seek">
@@ -99,7 +101,8 @@
         </div>
         <p class="description">
             ALAC.js is a port of the recently open sourced 
-            original Apple Lossless decoder to JavaScript. 
+            <a href="http://alac.macosforge.org/">original
+            Apple Lossless decoder</a> to JavaScript.
             As its name implies, ALAC is a lossless format
             designed to reduce file size without compromizing
             quality.  Can you tell the difference?

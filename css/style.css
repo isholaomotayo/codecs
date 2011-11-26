@@ -37,6 +37,11 @@ header h1 {
     margin: 0;
 }
 
+header h1 a, header h1 a:visited {
+    color: #DCDEE0;
+    text-decoration: none;
+}
+
 header h2 {
     font-size: 21px;
     margin: 0;

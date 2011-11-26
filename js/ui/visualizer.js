@@ -4,8 +4,10 @@ var Visualizer = (function(){
 
 function Visualizer(canvas, fft) {
     var self = this;
-    this.elem = canvas;
-    this.fft = fft;
+    this.elem   = canvas;
+    this.fft    = fft;
+    this.width  = this.elem.clientWidth;
+    this.height = this.elem.clientHeight;
     setInterval(function(){
         self.draw();
     }, 1000/60);
@@ -31,7 +33,7 @@ Visualizer.prototype = {
 
             ctx.save();
 
-            ctx.fillStyle = 'rgba(0,0,0,0.2)';
+            ctx.fillStyle = 'rgba(20,21,23,0.2)';
             ctx.fillRect(0, 0, w, h); 
 
             grad.addColorStop(0.0, 'rgba(0,0,0,0.5)');
