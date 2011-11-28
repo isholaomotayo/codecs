@@ -165,6 +165,13 @@ DGPlayer.on('play', function play(){
     DGPlayer.off('play', play);
     DGPlayer.state = 'playing';
 });
+
+[].slice.call(document.querySelectorAll('.player canvas.visualization')).forEach(function (c) {
+    var v = new Visualizer(c, {spectrum:{length:4096}});
+    v.f = 200;
+    v.r = Math.random() * 1000;
+    v.draw();
+});
     </script>
 
 </body></html>
