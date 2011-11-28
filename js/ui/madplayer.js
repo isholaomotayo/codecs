@@ -46,7 +46,7 @@ function createMadPlayer(url, isFile){
             gain.append(buffer, channelCount);
         };
 
-        madVisual = new Visualizer(document.querySelector('.player canvas.visualization'), fft);
+        madVisual = new Visualizer(document.querySelector('.player canvas.visualization'), fft, true);
 
         ret.UI      = madUI;
         ret.player  = madPlayer;

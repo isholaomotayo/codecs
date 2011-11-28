@@ -2,32 +2,39 @@ var Visualizer = (function(){
 
 // FIXME: This is basically just a functionality test, not very good looking or clever...
 
-function Visualizer(canvas, fft) {
-    var self = this;
+function Visualizer(canvas, fft, notPaused) {
     this.elem   = canvas;
     this.fft    = fft;
     this.width  = this.elem.clientWidth;
     this.height = this.elem.clientHeight;
-    setInterval(function(){
-        self.draw();
-    }, 1000/60);
+    this.paused = !notPaused;
+    !this.paused && this.start();
 }
 
 Visualizer.prototype = {
     elem: null,
     fft: null,
+    timer: null,
     barWidth: 4,
     f: 0,
     r: 0,
     paused: true,
+    start: function () {
+        var self = this;
+        this.timer = setInterval(function(){
+            self.draw();
+        }, 1000/60);
+    },
+    stop: function () {
+        this.timer && clearInterval(this.timer);
+        this.timer = null;
+    },
     draw: function () {
         var c   = this.elem,
             ctx = c.getContext('2d'),
             fft = this.fft,
-            buf = fft.buffer,
             w   = c.width,
             h   = c.height,
-            l   = buf.length / 2,
             f   = this.f,
             r   = this.r,
             bw  = this.barWidth,
