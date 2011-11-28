@@ -31,6 +31,7 @@ Visualizer.prototype = {
             bw  = this.barWidth,
             grad= ctx.createLinearGradient(0, -h / 2, 0, h / 2),
             t   = +new Date / 1000,
+            m   = Math.min(fft.spectrum.length, w)
             i;  
 
             ctx.save();
@@ -53,17 +54,17 @@ Visualizer.prototype = {
             ctx.beginPath();
             ctx.moveTo(0, 0); 
             if (this.paused) {
-                for (i=0; i<fft.spectrum.length; i++){
-                        ctx.lineTo(i, Math.sin((t + f + i) * 0.09 * i / fft.spectrum.length) / 30);
+                for (i=0; i<w; i++){
+                        ctx.lineTo(i, Math.sin((t + f + i) * 0.029 * i / w) / 30);
                 }   
 
                 while(i--){
                         ctx.lineTo(i, -Math.sin((t + f + i) * 0.1) / 30);
                 }
             } else {
-                for (i=0; i<fft.spectrum.length; i++){
+                for (i=0; i<m; i++){
                         ctx.lineTo(i, fft.spectrum[i] + 0.001);
-                }   
+                }
 
                 while(i--){
                         ctx.lineTo(i, -fft.spectrum[i]);
