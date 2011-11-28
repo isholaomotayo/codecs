@@ -18,6 +18,7 @@ Visualizer.prototype = {
     fft: null,
     barWidth: 4,
     f: 0,
+    r: 0,
     paused: true,
     draw: function () {
         var c   = this.elem,
@@ -28,9 +29,10 @@ Visualizer.prototype = {
             h   = c.height,
             l   = buf.length / 2,
             f   = this.f,
+            r   = this.r,
             bw  = this.barWidth,
             grad= ctx.createLinearGradient(0, -h / 2, 0, h / 2),
-            t   = +new Date / 50,
+            t   = +new Date / 1000,
             m   = Math.min(fft.spectrum.length, w)
             i;  
 
@@ -55,11 +57,11 @@ Visualizer.prototype = {
             ctx.moveTo(0, 0); 
             if (this.paused) {
                 for (i=0; i<w; i++){
-                        ctx.lineTo(i, Math.sin((t + i) * 0.0790001 * i / w) / 30);
+                        ctx.lineTo(i, Math.sin((t + i + r) * 0.09 * i / w) / 30);
                 }
 
                 while(i--){
-                        ctx.lineTo(i, -Math.sin((t + i) * 0.1) / 30);
+                        ctx.lineTo(i, -Math.sin((t + i + r) * 0.1) / 30);
                 }
             } else {
                 for (i=0; i<m; i++){
@@ -77,7 +79,7 @@ Visualizer.prototype = {
 
             ctx.restore();
             this.f = (f + 0.3) % 360;
-
+            this.r += 0.3;
     },
 };
 
