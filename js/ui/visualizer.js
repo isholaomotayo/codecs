@@ -18,6 +18,7 @@ Visualizer.prototype = {
     fft: null,
     barWidth: 4,
     f: 0,
+    paused: true,
     draw: function () {
         var c   = this.elem,
             ctx = c.getContext('2d'),
@@ -28,7 +29,8 @@ Visualizer.prototype = {
             l   = buf.length / 2,
             f   = this.f,
             bw  = this.barWidth,
-            grad= ctx.createLinearGradient(0, -h / 2, 0, h / 2), 
+            grad= ctx.createLinearGradient(0, -h / 2, 0, h / 2),
+            t   = +new Date / 1000,
             i;  
 
             ctx.save();
@@ -50,14 +52,23 @@ Visualizer.prototype = {
             ctx.scale(1, h * 15); 
             ctx.beginPath();
             ctx.moveTo(0, 0); 
+            if (this.paused) {
+                for (i=0; i<fft.spectrum.length; i++){
+                        ctx.lineTo(i, Math.sin((t + f + i) * 0.09 * i / fft.spectrum.length) / 30);
+                }   
 
-            for (i=0; i<fft.spectrum.length; i++){
-                    ctx.lineTo(i, fft.spectrum[i] + 0.001);
-            }   
+                while(i--){
+                        ctx.lineTo(i, -Math.sin((t + f + i) * 0.1) / 30);
+                }
+            } else {
+                for (i=0; i<fft.spectrum.length; i++){
+                        ctx.lineTo(i, fft.spectrum[i] + 0.001);
+                }   
 
-            while(i--){
-                    ctx.lineTo(i, -fft.spectrum[i]);
-            }   
+                while(i--){
+                        ctx.lineTo(i, -fft.spectrum[i]);
+                }
+            }
 
             ctx.closePath();
             ctx.globalCompositeOperation = 'lighter';
