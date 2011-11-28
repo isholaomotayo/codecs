@@ -20,6 +20,7 @@ function createMadPlayer(url, isFile){
 
         madPlayer.onPause = madPlayer.onPlay = function(){
             madUI.state = madPlayer.playing ? 'playing' : 'paused';
+            madVisual && (madVisual.paused = !madPlayer.playing);
         };
         madPlayer.onProgress = function(current, total, preload) {
             madUI.bufferProgress = Math.round(preload * 100);
