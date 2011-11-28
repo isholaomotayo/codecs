@@ -153,14 +153,13 @@ Sink.doInterval.backgroundWork = !/firefox\/8.0/i.test(navigator.userAgent);
 var madPlayer;
 
 DGPlayer.on('play', function play(){
+    madPlayer.player.setPlaying(true);
     madPlayer = createMadPlayer('media/fonksquish/planets.mp3');
  
     madPlayer.onready = function() {
         DGPlayer.songTitle = "Planets (DJ Apt One Remix)";
         DGPlayer.songArtist = "fONKSQUISh";
         DGPlayer.coverArt = "dgplayer/resources/fallback_album_art.png"
-
-        madPlayer.player.setPlaying(true);
     };
 
     DGPlayer.off('play', play);
