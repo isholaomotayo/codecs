@@ -55,7 +55,7 @@ Visualizer.prototype = {
             ctx.moveTo(0, 0); 
             if (this.paused) {
                 for (i=0; i<w; i++){
-                        ctx.lineTo(i, Math.sin((t + i) * 0.079 * i / w) / 30);
+                        ctx.lineTo(i, Math.sin((t + i) * 0.0790001 * i / w) / 30);
                 }
 
                 while(i--){
