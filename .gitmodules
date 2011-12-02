@@ -4,3 +4,6 @@
 [submodule "js/jsmad"]
 	path = js/jsmad
 	url = g:ofmlabs/jsmad
+[submodule "js/alac.js"]
+	path = js/alac.js
+	url = g:ofmlabs/alac.js
