@@ -1,14 +1,13 @@
-DGPlayer = (function() {
+function DGPlayer(root) {
     
     // Get elements
-    var root = document.querySelector(".player"),
-        events = {},
+    var events = {},
         state = 'paused';
     
     // Preload images
-    new Image().src = "resources/playbutton_active.png";
-    new Image().src = "resources/pausebutton.png";
-    new Image().src = "resources/pausebutton_active.png";
+    new Image().src = "/dgplayer/resources/playbutton_active.png";
+    new Image().src = "/dgplayer/resources/pausebutton.png";
+    new Image().src = "/dgplayer/resources/pausebutton_active.png";
     
     // Prevent text selection in IE
     root.onselectstart = function() {
@@ -319,4 +318,4 @@ DGPlayer = (function() {
     
     return API;
     
-})();
+}

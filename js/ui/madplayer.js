@@ -1,4 +1,4 @@
-function createMadPlayer(url, isFile){
+function createMadPlayer(url, DGPlayer, isFile){
     var ret = {};
 
     Mad.Player[isFile ? 'fromFile' : 'fromURL'](url, function(player) {
