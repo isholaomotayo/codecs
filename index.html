@@ -152,8 +152,10 @@ Sink.doInterval.backgroundWork = !/firefox\/8.0/i.test(navigator.userAgent);
 
 var madPlayer;
 
+(function(DGPlayer){
+
 DGPlayer.on('play', function play(){
-    madPlayer = createMadPlayer('media/fonksquish/planets.mp3');
+    madPlayer = createMadPlayer('media/fonksquish/planets.mp3', DGPlayer);
  
     madPlayer.onready = function() {
         DGPlayer.songTitle = "Planets (DJ Apt One Remix)";
@@ -165,6 +167,8 @@ DGPlayer.on('play', function play(){
     DGPlayer.off('play', play);
     DGPlayer.state = 'playing';
 });
+
+}(DGPlayer(document.getElementById('jsmad'))));
 
 [].slice.call(document.querySelectorAll('.player canvas.visualization')).forEach(function (c) {
     var v = new Visualizer(c, {spectrum:{length:4096}});
