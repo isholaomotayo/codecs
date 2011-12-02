@@ -17,7 +17,7 @@ Visualizer.prototype = {
     timer: null,
     barWidth: 4,
     f: 0,
-    r: 0,
+    r: 10,
     paused: true,
     start: function () {
         var self = this;
@@ -64,11 +64,11 @@ Visualizer.prototype = {
             ctx.moveTo(0, 0); 
             if (this.paused) {
                 for (i=0; i<w; i++){
-                        ctx.lineTo(i, Math.sin((t + i + r) * 0.09 * i / w) / 30);
+                        ctx.lineTo(i, (1 / Math.abs(i - r + 3)) / 35 + 0.001);
                 }
 
                 while(i--){
-                        ctx.lineTo(i, -Math.sin((t + i + r) * 0.1) / 30);
+                        ctx.lineTo(i, -(1 / Math.abs(i - r + 3)) / 35 + 0.001);
                 }
             } else {
                 for (i=0; i<m; i++){
@@ -86,7 +86,7 @@ Visualizer.prototype = {
 
             ctx.restore();
             this.f = (f + 0.3) % 360;
-            this.r += 0.3;
+            this.r = (r + 2.73) % (w * 2);
     },
 };
 
