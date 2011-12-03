@@ -35,6 +35,8 @@ function createMadPlayer(url, DGPlayer, isFile){
         gain.mix    = 1.0;
 
         madPlayer.onPostProcessing = function(buffer, channelCount) {
+            if (!madPlayer.playing) return;
+
             for (i=0; i<buffer.length; i+=channelCount) {
                 s = 0;
                 for (n=0; n<channelCount; n++) {
