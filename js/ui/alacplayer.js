@@ -8,6 +8,16 @@ function createALACPlayer(url, DGPlayer, isFile){
         }
     };
 
+    var player = {
+        playing: false,
+        setPlaying: function (val) {
+            this.playing = val;
+            this.emit([val ? 'play' : 'pause']);
+        },
+    };
+
+    Sink.EventEmitter.call(player);
+
     var httpSource = new Aurora.HTTPSource("Source");
     var cafDemuxer = new Aurora.CAFDemuxer("Demuxer");
     var alacDecoder = new Aurora.ALACDecoder("Decoder");
@@ -15,7 +25,7 @@ function createALACPlayer(url, DGPlayer, isFile){
 
     httpSource.url = url;
 
-    httpSource.chunkSize = 128 * 1024;
+    httpSource.chunkSize = 64 * 1024;
 
     httpSource.messagebus = bus;
     cafDemuxer.messagebus = bus;
@@ -63,16 +73,6 @@ function createALACPlayer(url, DGPlayer, isFile){
 
         sink.on('error', function(e){ console.log(e) });
 
-        var player = {
-            playing: false,
-            setPlaying: function (val) {
-                this.playing = val;
-                this.emit([val ? 'play' : 'pause']);
-            },
-        };
-
-        Sink.EventEmitter.call(player);
-
         DGPlayer.on('play', function(){
             player.setPlaying(true);
             DGPlayer.state = 'playing';
@@ -86,18 +86,13 @@ function createALACPlayer(url, DGPlayer, isFile){
         });
 
         player.on('play', function () {
-            DGPlayer.state = 'playing';
+            DGPlayer.state = buffer.buffering ? 'buffering' : 'playing';
             visual && (visual.paused = false);
         });
         player.on('pause', function () {
             DGPlayer.state = 'paused';
             visual && (visual.paused = true);
         });
-        player.on('progress', function(current, total, preload) {
-            // Do something here
-        });
-
-
 
         fft         = audioLib.FFT(sink.sampleRate, 4096);
         gain        = audioLib.GainController.createBufferBased(sink.channelCount, sink.sampleRate, DGPlayer.volume / 100);
@@ -127,6 +122,18 @@ function createALACPlayer(url, DGPlayer, isFile){
 
         ret.emit('ready', []);
     };
+
+    player.on('progress', function(current, total, preload, buffering) {
+        DGPlayer.bufferProgress = Math.round(preload * 100);
+        DGPlayer.seekTime = Math.floor(current);
+        DGPlayer.duration = Math.floor(total);
+    });
+
+    setInterval(function(){
+        player.emit('progress', [0, 30000, httpSource.offset / httpSource.length, buffer.buffering ? buffer.buffers.length / buffer.highwaterMark : null]);
+    }, 125);
+
+    player.state = 'buffering';
 
     buffer.start();
     alacDecoder.start();
