@@ -67,7 +67,8 @@ function createALACPlayer(url, DGPlayer, isFile){
                     f = output.receive();
                     
                     if (f) {
-                        frame = new Int16Array(f.data.buffer), frameOffset = 0;
+                        frame = sink.sampleRate === 44100 ? new Int16Array(f.data.buffer) : Sink.resample(new Int16Array(f.data.buffer), 44100, sink.sampleRate);
+                        frameOffset = 0;
                     } else {
                         frame = null, frameOffset = 0;
                     }
