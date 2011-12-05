@@ -39,6 +39,8 @@ function createALACPlayer(url, DGPlayer, isFile){
 
     alacDecoder.outputs.audio = buffer.inputs.contents;
 
+    var sampleOffset = 0, totalLength = 0;
+
     buffer.onHighwaterMark = function () {
         console.log("Hitting High-Water Mark, Aurora o'hoy! Lets start playing!");
         
@@ -46,6 +48,8 @@ function createALACPlayer(url, DGPlayer, isFile){
         
         var f = output.receive();
         var frame = new Int16Array(f.data.buffer), frameOffset = 0;
+
+        totalLength = 265000; // FIXME: Oh yeah it's hard coded for now
         
         var sink = Sink(function(buffer, channelCount) {
             if (!player.playing) return;
@@ -69,6 +73,8 @@ function createALACPlayer(url, DGPlayer, isFile){
                     }
                 }
             }
+
+            sampleOffset += buffer.length / channelCount;
         }, 2, null, 44100);
 
         sink.on('error', function(e){ console.log(e) });
@@ -125,13 +131,15 @@ function createALACPlayer(url, DGPlayer, isFile){
 
     player.on('progress', function(current, total, preload, buffering) {
         DGPlayer.bufferProgress = Math.round(preload * 100);
-        DGPlayer.seekTime = Math.floor(current);
-        DGPlayer.duration = Math.floor(total);
+        if (total) {
+            DGPlayer.seekTime = Math.floor(current * 0.001) * 1000;
+            DGPlayer.duration = Math.floor(total * 0.001) * 1000;
+        }
     });
 
     setInterval(function(){
-        player.emit('progress', [0, 30000, httpSource.offset / httpSource.length, buffer.buffering ? buffer.buffers.length / buffer.highwaterMark : null]);
-    }, 125);
+        player.emit('progress', [sampleOffset / 44.100, totalLength, httpSource.offset / httpSource.length, buffer.buffering ? buffer.buffers.length / buffer.highwaterMark : null]);
+    }, 1000);
 
     player.state = 'buffering';
 
