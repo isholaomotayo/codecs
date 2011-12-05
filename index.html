@@ -77,8 +77,8 @@
                 <img src="dgplayer/resources/fallback_album_art.png">
             </div>
         
-            <p>Title</p>
-            <span>Artist</span>
+            <p>It's Okay to Love</p>
+            <span>fONKSQUISh</span>
         
             <div class="button"></div>
         
@@ -176,10 +176,10 @@ var alacPlayer;
 (function(DGPlayer){
 
 DGPlayer.on('play', function play(){
-    alacPlayer = createALACPlayer('media/fonksquish/alac/planets.caf', DGPlayer);
+    alacPlayer = createALACPlayer('media/fonksquish/love.caf', DGPlayer);
  
     alacPlayer.on('ready', function() {
-        DGPlayer.songTitle = "Planets (DJ Apt One Remix)";
+        DGPlayer.songTitle = "It's Okay to Love";
         DGPlayer.songArtist = "fONKSQUISh";
         DGPlayer.coverArt = "dgplayer/resources/fallback_album_art.png"
         alacPlayer.player.setPlaying(true);
