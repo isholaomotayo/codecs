@@ -12,8 +12,10 @@
 <body>
     <header>
         <img src="resources/logo.png">
-        <h1><a href="http://ofmlabs.org">ofmlabs</a> codecs</h1>
-        <h2>A suite of JavaScript audio codecs</h2>
+        <div>
+            <h1><a href="http://ofmlabs.org">ofmlabs</a> codecs</h1>
+            <h2>A suite of JavaScript audio codecs</h2>
+        </div>
     </header>
     
     <p class="description">
@@ -106,7 +108,7 @@
             ALAC.js is a port of the recently open sourced 
             <a href="http://alac.macosforge.org/">original Apple Lossless</a> 
             decoder to JavaScript. As its name implies, ALAC is a lossless format
-            designed to reduce file size without compromizing
+            designed to reduce file size without compromising
             quality.  Can you tell the difference?
         </p>
     </section>
@@ -124,51 +126,47 @@
     <script src="js/alac.js"></script>
 
     <script>        
-var madPlayer;
+    (function(DGPlayer){
 
-(function(DGPlayer){
-
-DGPlayer.on('play', function play(){
-    madPlayer = createMadPlayer('media/planets.mp3', DGPlayer);
+    DGPlayer.on('play', function play(){
+        madPlayer = createMadPlayer('media/planets.mp3', DGPlayer);
  
-    madPlayer.onready = function() {
-        DGPlayer.songTitle = "Planets (DJ Apt One Remix)";
-        DGPlayer.songArtist = "fONKSQUISh";
-        DGPlayer.coverArt = "dgplayer/resources/fallback_album_art.png"
-        madPlayer.player.setPlaying(true);
-    };
+        madPlayer.onready = function() {
+            DGPlayer.songTitle = "Planets (DJ Apt One Remix)";
+            DGPlayer.songArtist = "fONKSQUISh";
+            DGPlayer.coverArt = "dgplayer/resources/fallback_album_art.png"
+            madPlayer.player.setPlaying(true);
+        };
 
-    DGPlayer.off('play', play);
-    DGPlayer.state = 'playing';
-});
-
-}(DGPlayer(document.getElementById('jsmad'))));
-
-var alacPlayer;
-
-(function(DGPlayer){
-
-DGPlayer.on('play', function play(){
-    alacPlayer = createALACPlayer('media/love.caf', DGPlayer);
- 
-    alacPlayer.on('ready', function() {
-        DGPlayer.songTitle = "It's Okay to Love";
-        DGPlayer.songArtist = "fONKSQUISh";
-        DGPlayer.coverArt = "dgplayer/resources/fallback_album_art.png"
-        alacPlayer.player.setPlaying(true);
+        DGPlayer.off('play', play);
+        DGPlayer.state = 'playing';
     });
 
-    DGPlayer.off('play', play);
-    DGPlayer.state = 'playing';
-});
+    }(DGPlayer(document.getElementById('jsmad'))));
 
-}(DGPlayer(document.getElementById('alac'))));
+    (function(DGPlayer){
 
-[].slice.call(document.querySelectorAll('.player canvas.visualization')).forEach(function (c) {
-    var v = new Visualizer(c, {spectrum:{length:4096}});
-    v.f = 200;
-    v.draw();
-});
+    DGPlayer.on('play', function play(){
+        alacPlayer = createALACPlayer('media/love.caf', DGPlayer);
+ 
+        alacPlayer.on('ready', function() {
+            DGPlayer.songTitle = "It's Okay to Love";
+            DGPlayer.songArtist = "fONKSQUISh";
+            DGPlayer.coverArt = "dgplayer/resources/fallback_album_art.png"
+            alacPlayer.player.setPlaying(true);
+        });
+
+        DGPlayer.off('play', play);
+        DGPlayer.state = 'playing';
+    });
+
+    }(DGPlayer(document.getElementById('alac'))));
+
+    [].slice.call(document.querySelectorAll('.player canvas.visualization')).forEach(function (c) {
+        var v = new Visualizer(c, {spectrum:{length:4096}});
+        v.f = 200;
+        v.draw();
+    });
     </script>
 
 </body></html>
