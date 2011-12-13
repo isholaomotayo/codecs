@@ -19,17 +19,15 @@ body {
 }
 
 header {
-    text-align: center;
     font-family: "Museo Slab";
     color: #DCDEE0;
     text-shadow: rgba(0, 0, 0, 0.3) 0 2px 5px;
-    width: 445px;
-    margin: 0 auto 0 auto;
+    text-align: center;
 }
 
-header img {
-    float: left;
-    padding-top: 7px;
+header div {
+    display: inline-block;
+    vertical-align: super;
 }
 
 header h1 {
