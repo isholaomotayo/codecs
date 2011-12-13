@@ -4,6 +4,7 @@ var Visualizer = (function(){
 
 function Visualizer(canvas, fft, notPaused) {
     this.elem   = canvas;
+    this.ctx    = canvas.getContext('2d');
     this.fft    = fft;
     this.width  = this.elem.clientWidth;
     this.height = this.elem.clientHeight;
@@ -31,7 +32,7 @@ Visualizer.prototype = {
     },
     draw: function () {
         var c   = this.elem,
-            ctx = c.getContext('2d'),
+            ctx = this.ctx,
             fft = this.fft,
             w   = c.width,
             h   = c.height,
