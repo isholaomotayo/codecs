@@ -5,9 +5,9 @@ function DGPlayer(root) {
         state = 'paused';
     
     // Preload images
-    new Image().src = "/dgplayer/resources/playbutton_active.png";
-    new Image().src = "/dgplayer/resources/pausebutton.png";
-    new Image().src = "/dgplayer/resources/pausebutton_active.png";
+    new Image().src = "dgplayer/resources/playbutton_active.png";
+    new Image().src = "dgplayer/resources/pausebutton.png";
+    new Image().src = "dgplayer/resources/pausebutton_active.png";
     
     // Prevent text selection in IE
     root.onselectstart = function() {
