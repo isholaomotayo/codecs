@@ -626,6 +626,7 @@ HTTPSource = (function() {
       buffer = new Buffer(buf);
       _this.offset += buffer.length;
       _this.emit('data', buffer, _this.offset === _this.length);
+      _this.emit('progress', _this.offset / _this.length * 100);
       _this.inflight = false;
       return _this.loop();
     };
@@ -1855,6 +1856,7 @@ Player = (function() {
     this.demuxer = null;
     this.decoder = null;
     this.queue = null;
+    this._pausedTime = this._timePaused = 0;
     this.source.once('data', this.probe);
     this.source.on('error', function(err) {
       _this.pause();
@@ -1887,15 +1889,23 @@ Player = (function() {
     var _this = this;
     this.playing = true;
     return this._timer = setInterval(function() {
-      var _ref;
-      _this.currentTime = (((_ref = _this.sink) != null ? _ref.getPlaybackTime() : void 0) || 0) / 44100 * 1000 | 0;
+      var time;
+      if (!(_this.sink && _this.playing)) return;
+      time = _this.sink.getPlaybackTime();
+      if (_this._timePaused > 0) {
+        _this._pausedTime += time - _this._timePaused;
+        _this._timePaused = 0;
+      }
+      _this.currentTime = (time - _this._pausedTime) / 44100 * 1000 | 0;
       if (_this.currentTime > 0) return _this.emit('progress', _this.currentTime);
     }, 200);
   };
 
   Player.prototype.pause = function() {
+    var _ref;
     this.playing = false;
-    return clearInterval(this._timer);
+    clearInterval(this._timer);
+    return this._timePaused = ((_ref = this.sink) != null ? _ref.getPlaybackTime() : void 0) || 0;
   };
 
   Player.prototype.probe = function(chunk) {
