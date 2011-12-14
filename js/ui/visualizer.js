@@ -11,6 +11,8 @@ var requestAnimFrame = (function(){
             };
 })();
 
+var isMacWebKit = /Mac OS X/i.test(navigator.userAgent) && /WebKit/i.test(navigator.userAgent);
+
 function FrameTimer (callback) {
     this.callback = callback;
     var self = this;
@@ -91,9 +93,11 @@ Visualizer.prototype = {
             grad.addColorStop(1.0, 'rgba(0,0,0,0.5)');
 
             ctx.fillStyle           = grad;
+if (!isMacWebKit) {
             ctx.shadowOffsetX       = ctx.shadowOffsetY = 0;
             ctx.shadowBlur          = 10; 
             ctx.shadowColor         = 'rgba(255,255,255,0.35)';
+}
             ctx.translate(0, h/2);
             ctx.scale(1, h * 15); 
             ctx.beginPath();
