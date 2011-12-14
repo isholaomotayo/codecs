@@ -1,6 +1,41 @@
 var Visualizer = (function(){
 
-// FIXME: This is basically just a functionality test, not very good looking or clever...
+var requestAnimFrame = (function(){
+    return  window.requestAnimationFrame       ||
+            window.webkitRequestAnimationFrame ||
+            window.mozRequestAnimationFrame    ||
+            window.oRequestAnimationFrame      ||
+            window.msRequestAnimationFrame     ||
+            function(callback, element){
+                window.setTimeout(callback, 1000 / 60);
+            };
+})();
+
+function FrameTimer (callback) {
+    this.callback = callback;
+    var self = this;
+    this._callback = function(){
+            self.nextFrame();
+    };
+    this.start();
+}
+
+FrameTimer.prototype = {
+    _callback: null,
+    callback: null,
+    stopped: false,
+    start: function () {
+        requestAnimFrame(this._callback);
+    },
+    nextFrame: function () {
+        if (this.stopped) return;
+        this.callback && this.callback();
+        this.start();
+    },
+    clear: function () {
+        this.stopped = true;
+    },
+};
 
 function Visualizer(canvas, fft, notPaused) {
     this.elem   = canvas;
@@ -22,12 +57,12 @@ Visualizer.prototype = {
     paused: true,
     start: function () {
         var self = this;
-        this.timer = setInterval(function(){
+        this.timer = new FrameTimer(function(){
             self.draw();
-        }, 1000/60);
+        });
     },
     stop: function () {
-        this.timer && clearInterval(this.timer);
+        this.timer && this.timer.clear();
         this.timer = null;
     },
     draw: function () {
