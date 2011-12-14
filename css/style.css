@@ -18,11 +18,39 @@ body {
     margin: 40px auto;
 }
 
+body > div {
+    display: none;
+}
+
+.unsupported > div {
+    display: block;
+    position: fixed;
+    font-family: Helvetica, Arial, sans-serif;
+    top: 0;
+    width: 810px;
+    padding: 10px;
+    color: white;
+    text-shadow: black 0 1px 3px;
+    background: #c50202;
+    background: -webkit-linear-gradient(#c50202, #950202);
+    background: -moz-linear-gradient(#c50202, #950202);
+    background: -o-linear-gradient(#c50202, #950202);
+    box-shadow: black 0 1px 10px;
+    -webkit-box-shadow: black 0 1px 10px;
+    -moz-box-shadow: black 0 1px 10px;
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+}
+
 header {
     font-family: "Museo Slab";
     color: #DCDEE0;
     text-shadow: rgba(0, 0, 0, 0.3) 0 2px 5px;
     text-align: center;
+}
+
+.unsupported header {
+    margin-top: 70px;
 }
 
 header div {
@@ -94,6 +122,10 @@ section h3 {
 section > p {
     padding: 0 5px 0 5px;
     font-weight: normal !important;
+}
+
+.unsupported .player .button:active {
+    background: url(../dgplayer/resources/playbutton.png) !important;
 }
 
 footer {
