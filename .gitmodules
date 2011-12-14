@@ -1,9 +1,0 @@
-[submodule "js/audiolib.js"]
-	path = js/audiolib.js
-	url = g:jussi-kalliokoski/audiolib.js
-[submodule "js/jsmad"]
-	path = js/jsmad
-	url = g:ofmlabs/jsmad
-[submodule "js/alac.js"]
-	path = js/alac.js
-	url = g:ofmlabs/alac.js
