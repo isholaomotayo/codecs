@@ -104,7 +104,7 @@ Visualizer.prototype = {
                 }
 
                 while(i--){
-                        ctx.lineTo(i, -(1 / Math.abs(i - r + 3)) / 35 + 0.001);
+                        ctx.lineTo(i, -(1 / Math.abs(i - r + 3)) / 35);
                 }
             } else {
                 for (i=0; i<m; i++){
