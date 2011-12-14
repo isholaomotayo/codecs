@@ -132,15 +132,25 @@
     <script src="js/audiolib.js"></script>
                  
     <script src="js/jsmad.js"></script>
-    <!--<script src="js/alac.js"></script>-->
-    <script src="http://localhost:8080/"></script>
+    <script src="js/alac.js"></script>
 
     <script>
+    // Chrome doesn't support changing the sample rate, and uses whatever the hardware supports.
+    // We cheat here.  Instead of resampling on the fly, we're currently just loading two different
+    // files based on common hardware sample rates.
+    var _sampleRate = (function() {
+        var AudioContext = (window.AudioContext || window.webkitAudioContext);
+        if (!AudioContext)
+            return 44100;
+            
+        return new AudioContext().sampleRate;
+    })();    
+    
     (function(DGPlayer){
     if (unsupported) return;
 
     DGPlayer.on('play', function play(){
-        madPlayer = createMadPlayer('media/planets.mp3', DGPlayer);
+        madPlayer = createMadPlayer('media/planets@' + _sampleRate + '.mp3', DGPlayer);
  
         madPlayer.onready = function() {
             DGPlayer.songTitle = "Planets (DJ Apt One Remix)";
@@ -159,7 +169,7 @@
     if (unsupported) return;
     
     DGPlayer.on('play', function play(){
-        alacPlayer = createALACPlayer('media/love.caf', DGPlayer);
+        alacPlayer = createALACPlayer('media/love@' + _sampleRate + '.caf', DGPlayer);
  
         alacPlayer.on('ready', function() {
             DGPlayer.songTitle = "It's Okay to Love";
