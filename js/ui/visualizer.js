@@ -39,10 +39,10 @@ FrameTimer.prototype = {
 
 function Visualizer(canvas, fft, notPaused) {
     this.elem   = canvas;
-    this.ctx    = canvas.getContext('2d');
     this.fft    = fft;
-    this.width  = this.elem.clientWidth;
-    this.height = this.elem.clientHeight;
+    this.width  = this.elem.width	= this.elem.clientWidth;
+    this.height = this.elem.height	= this.elem.clientHeight;
+    this.ctx    = canvas.getContext('2d');
     this.paused = !notPaused;
     !this.paused && this.start();
 }
