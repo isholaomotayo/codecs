@@ -49,6 +49,12 @@ function Visualizer(canvas, fft, notPaused) {
     this.ctx    = canvas.getContext('2d');
     this.paused = !notPaused;
     !this.paused && this.start();
+
+    var self = this;
+
+    this.elem.onclick = function () {
+        self.paused || (self.timer ? self.stop() : self.start());
+    };
 }
 
 Visualizer.prototype = {

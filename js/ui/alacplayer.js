@@ -28,8 +28,13 @@ function createALACPlayer(url, DGPlayer, isFile){
     player.on('ready', function() {
         DGPlayer.duration = player.duration;
         
-        var fft = audioLib.FFT(player.sink.sampleRate, 4096);
+        var fft = ret.fft = audioLib.FFT(player.sink.sampleRate, 4096);
+
+        var visual = ret.visual = new Visualizer(document.querySelector('#alac canvas.visualization'), fft, true);
+
         player.sink.on('audioprocess', function(buffer, channelCount) {
+            if (visual.paused || !visual.timer) return;
+
             for (i=0; i<buffer.length; i+=channelCount) {
                 s = 0;
                 for (n=0; n<channelCount; n++) {
@@ -38,8 +43,6 @@ function createALACPlayer(url, DGPlayer, isFile){
                 fft.pushSample(s / channelCount);
             }
         });
-
-        visual = new Visualizer(document.querySelector('#alac canvas.visualization'), fft, true);
     });
     
     player.on('buffer', function(percent) {
@@ -49,6 +52,9 @@ function createALACPlayer(url, DGPlayer, isFile){
     player.on('progress', function(time) {
         DGPlayer.seekTime = time;
     });
+
+    ret.player  = player;
+    ret.ui      = DGPlayer;
 
     return ret;
 }
