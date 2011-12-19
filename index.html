@@ -11,7 +11,7 @@
 </head>
 <body>
     <script>
-    if (!('mozWriteAudio' in new Audio()) && !window.AudioContext && !window.webkitAudioContext) {
+    if (!window.Audio || !('mozWriteAudio' in new Audio()) && !window.AudioContext && !window.webkitAudioContext) {
         var unsupported = true;
         document.body.classList.add("unsupported");
     }
