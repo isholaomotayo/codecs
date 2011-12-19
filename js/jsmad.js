@@ -17741,7 +17741,7 @@ Mad.Player = function (stream) {
     this.id3  = this.mp3.getID3v2Stream();
     this.mpeg = this.mp3.getMpegStream();
 
-    this.totalLength = ~~this.id3.toHash()['Length'];
+    this.totalLength = this.id3 && ~~this.id3.toHash()['Length'];
 
     // default onProgress handler
     this.onProgress = function (playtime, total, preloaded) {
@@ -17827,6 +17827,10 @@ Mad.Player.prototype.reinitDevice = function() {
     // The default value is the safest
     var bufferSize = null;
     var self = this;
+
+    var temp = Sink.sinks.moz.prototype.interval;
+    Sink.sinks.moz.prototype.interval = 100;
+
     this.dev = Sink(function(){
             return self.refill.apply(this, arguments);
     }, this.channelCount, bufferSize, this.sampleRate);
@@ -17834,6 +17838,8 @@ Mad.Player.prototype.reinitDevice = function() {
     this.dev.on && this.dev.on('error', function (e) {
         console.log(e);
     });
+
+    Sink.sinks.moz.prototype.interval = temp;
 }
 
 Mad.Player.prototype.setPlaying = function(playing) {
