@@ -5,6 +5,8 @@ function createMadPlayer(url, DGPlayer, isFile){
         var madUI, madPlayer, madVisual, fft, gain;
         madPlayer   = player;
         madUI       = DGPlayer;
+        
+        madUI.duration = 266000; // hardcoded for now because of a bug
 
         madUI.on('play', function(){
             madPlayer.setPlaying(true);
@@ -25,7 +27,7 @@ function createMadPlayer(url, DGPlayer, isFile){
         madPlayer.onProgress = function(current, total, preload) {
             madUI.bufferProgress = Math.round(preload * 100);
             madUI.seekTime = Math.floor(current * 1000);
-            madUI.duration = Math.floor(total * 1000);
+            //madUI.duration = Math.floor(total * 1000);
         };
 
         madPlayer.createDevice();
