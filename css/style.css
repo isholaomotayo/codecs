@@ -42,6 +42,10 @@ body > div {
     border-bottom-right-radius: 5px;
 }
 
+.unsupported > div a {
+    color: white;
+}
+
 header {
     font-family: "Museo Slab";
     color: #DCDEE0;
