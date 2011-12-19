@@ -42,8 +42,10 @@ FrameTimer.prototype = {
 function Visualizer(canvas, fft, notPaused) {
     this.elem   = canvas;
     this.fft    = fft;
-    this.width  = this.elem.width	= this.elem.clientWidth;
-    this.height = this.elem.height	= this.elem.clientHeight;
+    this.offc   = document.createElement('canvas');
+    this.width  = this.elem.width   = this.offc.width   = this.elem.clientWidth;
+    this.height = this.elem.height  = this.offc.height  = this.elem.clientHeight;
+    this.m_ctx  = this.offc.getContext('2d');
     this.ctx    = canvas.getContext('2d');
     this.paused = !notPaused;
     !this.paused && this.start();
@@ -69,7 +71,7 @@ Visualizer.prototype = {
     },
     draw: function () {
         var c   = this.elem,
-            ctx = this.ctx,
+            ctx = this.m_ctx,
             fft = this.fft,
             w   = c.width,
             h   = c.height,
@@ -127,6 +129,8 @@ if (!isMacWebKit) {
             ctx.restore();
             this.f = (f + 0.3) % 360;
             this.r = (r + 2.73) % (w * 2);
+
+            this.ctx.drawImage(this.offc, 0, 0);
     },
 };
 
