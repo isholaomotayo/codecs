@@ -34,8 +34,10 @@ function createMadPlayer(url, DGPlayer, isFile){
         gain        = audioLib.GainController.createBufferBased(madPlayer.channelCount, madPlayer.sampleRate, madUI.volume / 100);
         gain.mix    = 1.0;
 
+        madVisual = new Visualizer(document.querySelector('.player canvas.visualization'), fft, true);
+
         madPlayer.onPostProcessing = function(buffer, channelCount) {
-            if (!madPlayer.playing) return;
+            if (!madPlayer.playing || madVisual.paused || !madVisual.timer) return;
 
             for (i=0; i<buffer.length; i+=channelCount) {
                 s = 0;
@@ -47,8 +49,6 @@ function createMadPlayer(url, DGPlayer, isFile){
 
             gain.append(buffer, channelCount);
         };
-
-        madVisual = new Visualizer(document.querySelector('.player canvas.visualization'), fft, true);
 
         ret.UI      = madUI;
         ret.player  = madPlayer;
