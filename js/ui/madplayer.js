@@ -37,14 +37,14 @@ function createMadPlayer(url, DGPlayer, isFile){
         madVisual = new Visualizer(document.querySelector('.player canvas.visualization'), fft, true);
 
         madPlayer.onPostProcessing = function(buffer, channelCount) {
-            if (!madPlayer.playing || madVisual.paused || !madVisual.timer) return;
-
-            for (i=0; i<buffer.length; i+=channelCount) {
-                s = 0;
-                for (n=0; n<channelCount; n++) {
-                    s += buffer[i+n];
+            if (madPlayer.playing && !madVisual.paused && madVisual.timer) {
+                for (i=0; i<buffer.length; i+=channelCount) {
+                    s = 0;
+                    for (n=0; n<channelCount; n++) {
+                        s += buffer[i+n];
+                    }
+                    fft.pushSample(s / channelCount);
                 }
-                fft.pushSample(s / channelCount);
             }
 
             gain.append(buffer, channelCount);
