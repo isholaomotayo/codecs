@@ -135,8 +135,5 @@ footer {
     color: #DCDEE0;
     text-shadow: rgba(0, 0, 0, 0.7) 0 1px 3px;
     clear: both;
-}
-
-footer a {
-    text-decoration: none;
+    line-height: 20px;
 }
