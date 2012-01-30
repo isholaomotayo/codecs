@@ -426,7 +426,7 @@ Canvas3DVisualizer.prototype = {
 
         self.gl.drawArrays(self.gl.TRIANGLES, 0, 6);
 
-        self.r = (self.r + 1.3) % (self.fftSize * 1.2);
+        self.r = (self.r + 0.95) % (self.fftSize * 1.2);
     },
 };
 
