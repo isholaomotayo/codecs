@@ -42,30 +42,57 @@ var isMacWebKit = /Mac OS X/i.test(navigator.userAgent) && /WebKit/i.test(naviga
 
 function FrameTimer (callback) {
     this.callback = callback;
+    this.lastHit = +new Date;
+
     var self = this;
+
     this._callback = function(){
-            self.nextFrame();
+        self.nextFrame();
     };
+
+    this.fpsTimer = setInterval(function () {
+        self.calculateFPS();
+    }, 1000);
+
     this.start();
 }
 
 FrameTimer.prototype = {
     _callback: null,
+    fpsTimer: null,
     callback: null,
     id: null,
+
     stopped: false,
+    fps: 0,
+    frameCount: 0,
+    lastHit: 0,
+
     start: function () {
         this.id = requestAnimFrame(this._callback);
     },
+
     nextFrame: function () {
         if (this.stopped) return;
+        this.frameCount++;
         this.callback && this.callback();
         this.start();
     },
+
     clear: function () {
         this.stopped = true;
         this.id === null || clearAnimFrame(this.id);
+        this.fpsTimer === null || clearInterval(this.fpsTimer);
         this.id = null;
+    },
+
+    calculateFPS: function () {
+        var hit = +new Date;
+
+        this.fps = ~~(this.frameCount / (hit - this.lastHit) * 1000);
+
+        this.frameCount = 0;
+        this.lastHit    = hit;
     },
 };
 
