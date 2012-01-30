@@ -331,6 +331,7 @@ Canvas3DVisualizer.prototype = {
     gl: null,
 */
     fftBuffer: null,
+    traBuffer: null,
     vs: null,
     fs: null,
     pl: null,
@@ -353,6 +354,7 @@ Canvas3DVisualizer.prototype = {
         self.gl.useProgram(self.sp);
 
         self.fftBuffer = new Uint8Array(self.fftSize * 4);
+        self.traBuffer = new Uint8Array(self.fftSize * 4);
 
         self.pl = self.gl.getAttribLocation(self.sp, "p");
         self.tl = self.gl.getUniformLocation(self.sp, "t");
@@ -384,7 +386,8 @@ Canvas3DVisualizer.prototype = {
 
     draw: function () {
         var self = this,
-            step = self.fft.spectrum.length / self.fftBuffer.length / 4,
+            step = self.fft.spectrum.length / self.fftBuffer.length / 3,
+            trns = 0.3,
             i;
 
         self.gl.clear(self.gl.COLOR_BUFFER_BIT);
@@ -395,8 +398,18 @@ Canvas3DVisualizer.prototype = {
 
         self.gl.uniform2f(self.rl, self.elem.width, self.elem.height);
 
+        for (i=0; i<self.traBuffer.length; i+=4) {
+            self.traBuffer[i] = self.fft.spectrum[~~(i * step)] * 255 * 140;
+        }
+
         for (i=0; i<self.fftBuffer.length; i+=4) {
-            self.fftBuffer[i] = self.fft.spectrum[~~(i * step)] * 255 * 120;
+            if (self.fftBuffer[i] < self.traBuffer[i]) {
+                self.fftBuffer[i] = Math.min(self.fftBuffer[i] + (self.traBuffer[i] - self.fftBuffer[i]) * trns, self.traBuffer[i]);
+            }
+
+            if (self.fftBuffer[i] > self.traBuffer[i]) {
+                self.fftBuffer[i] = Math.max(self.fftBuffer[i] + (self.traBuffer[i] - self.fftBuffer[i]) * trns, self.traBuffer[i]);
+            }
         }
 
         self.gl.activeTexture(self.gl.TEXTURE0);
