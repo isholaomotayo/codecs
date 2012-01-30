@@ -344,6 +344,7 @@ Canvas3DVisualizer.prototype = {
 
     fftSize: 128,
     t: 0,
+    r: 0,
 
     init: function () {
         var self = this;
@@ -387,7 +388,7 @@ Canvas3DVisualizer.prototype = {
     draw: function () {
         var self = this,
             step = self.fft.spectrum.length / self.fftBuffer.length / 3,
-            trns = 0.3,
+            trns = self.paused ? 0.8 : 0.3,
             i;
 
         self.gl.clear(self.gl.COLOR_BUFFER_BIT);
@@ -398,8 +399,14 @@ Canvas3DVisualizer.prototype = {
 
         self.gl.uniform2f(self.rl, self.elem.width, self.elem.height);
 
-        for (i=0; i<self.traBuffer.length; i+=4) {
-            self.traBuffer[i] = self.fft.spectrum[~~(i * step)] * 255 * 140;
+        if (self.paused) {
+            for (i=0; i<self.traBuffer.length; i+=4) {
+                self.traBuffer[i] = Math.min((self.fftSize * 2 / Math.abs(i * 0.25 - self.r)), 255);
+            }
+        } else {
+            for (i=0; i<self.traBuffer.length; i+=4) {
+                self.traBuffer[i] = self.fft.spectrum[~~(i * step)] * 255 * 140;
+            }
         }
 
         for (i=0; i<self.fftBuffer.length; i+=4) {
@@ -418,6 +425,8 @@ Canvas3DVisualizer.prototype = {
         self.gl.uniform1i(self.fl, 0);
 
         self.gl.drawArrays(self.gl.TRIANGLES, 0, 6);
+
+        self.r = (self.r + 1.3) % (self.fftSize * 1.2);
     },
 };
 
